@@ -3,7 +3,8 @@ const app = new Vue({
   data: {
     coins: [],
     specificCoin: { init: false },
-    refresh: ""
+    refresh: "",
+    input: ""
   },
   methods: {
     growthColor: function(change) {
@@ -24,9 +25,8 @@ const app = new Vue({
           this.coins = top8;
         });
     },
-    fetchSingleCoin: function(event) {
-      if (!event.target.value) return;
-      coinSymbol = event.target.value.toUpperCase();
+    fetchSingleCoin: function(input) {
+      coinSymbol = input.toUpperCase();
       fetch("http://coincap.io/page/" + coinSymbol)
         .then(response => response.json())
         .then(data => {
@@ -56,8 +56,8 @@ const app = new Vue({
     <div class="card bitcoin-card">
       <div class="card-content has-text-centered" >
         <p class="title">Search</p>
-          <input class="input" type="text" v-on:keydown.enter="fetchSingleCoin($event)" placeholder="Example: BTC">
-          <button class="button is-primary" v-on:click="fetchSingleCoin($event)">See price</button>
+          <input class="input" type="text" v-model="input" v-on:keydown.enter="fetchSingleCoin(input)" placeholder="Example: BTC">
+          <button class="button is-primary" v-on:click="fetchSingleCoin(input)">See price</button>
           <div>
             <p class="subtitle" v-if="specificCoin.id">{{specificCoin.id}}: $\{{specificCoin.price}}</p>
             <p class="subtitle" v-else-if="Object.keys(specificCoin).length === 0">Currency not found</p>
@@ -75,5 +75,5 @@ const app = new Vue({
       </p>
     </div>
   </div>
-  `
+`
 });
