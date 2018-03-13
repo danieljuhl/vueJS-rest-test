@@ -31,7 +31,6 @@ const app = new Vue({
         .then(response => response.json())
         .then(data => {
           this.specificCoin = data;
-          console.log(this.specificCoin);
         });
     }
   },
