@@ -1,0 +1,37 @@
+.bitcoin-card {
+  display: inline-block;
+  margin: 4%;
+  max-width: 450px;
+  max-height: 250px;
+  height: 250px;
+  width: 250px;
+  vertical-align: top;
+}
+
+.bitcoin-card .title {
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.bitcoin-card .subtitle {
+  text-align: center;
+}
+
+.growth-plus {
+  color: rgb(22, 196, 115);
+  font-weight: 700;
+}
+
+.growth-minus {
+  color: rgb(228, 84, 58);
+  font-weight: 700;
+}
+
+.button {
+  margin: 10px;
+}
+
+.big-title {
+  margin-top: 50px;
+  margin-bottom: 0;
+}
