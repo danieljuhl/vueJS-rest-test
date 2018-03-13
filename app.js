@@ -2,7 +2,7 @@ const app = new Vue({
   el: "#app",
   data: {
     coins: [],
-    specificCoin: {},
+    specificCoin: { init: false },
     refresh: ""
   },
   methods: {
@@ -25,12 +25,15 @@ const app = new Vue({
         });
     },
     fetchSingleCoin: function(event) {
-      if (event.target.value === "") return;
+      if (!event.target.value) return;
       coinSymbol = event.target.value.toUpperCase();
       fetch("http://coincap.io/page/" + coinSymbol)
         .then(response => response.json())
         .then(data => {
           this.specificCoin = data;
+        })
+        .catch(error => {
+          this.specificCoin = { error: true };
         });
     }
   },
@@ -57,6 +60,7 @@ const app = new Vue({
           <button class="button is-primary" v-on:click="fetchSingleCoin($event)">See price</button>
           <div>
             <p class="subtitle" v-if="specificCoin.id">{{specificCoin.id}}: $\{{specificCoin.price}}</p>
+            <p class="subtitle" v-else-if="Object.keys(specificCoin).length === 0">Currency not found</p>
           </div>
         </div>
       </div>
@@ -71,5 +75,5 @@ const app = new Vue({
       </p>
     </div>
   </div>
-`
+  `
 });
