@@ -14,6 +14,10 @@ const app = new Vue({
       }
     },
     getCoins: function() {
+      if (parseInt(this.top) === 0 || this.top === "") {
+        this.coins.length = 0;
+        return;
+      }
       fetch("http://coincap.io/front")
         .then(response => response.json())
         .then(data => {
@@ -55,7 +59,8 @@ const app = new Vue({
   <div class="container has-text-centered">
     <div>
       <h1 class="title big-title">Top Cryptocurrency By Price</h1>
-      <input type="number" class="input column is-one-fifth input-number" v-model="top" v-on:input="getCoins()" placeholder="Cryptocurrencies to show - example: 8">
+      <p class="has-text-grey-light">Amount of cryptocurrencies to show:</p>
+      <input type="number" class="input column is-one-fifth input-number" v-model="top" v-on:input="getCoins()" placeholder="Example: 5">
     </div>
     <div class="card bitcoin-card">
       <div class="card-content has-text-centered" >
