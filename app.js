@@ -4,7 +4,8 @@ const app = new Vue({
     coins: [],
     specificCoin: { init: false },
     refresh: "",
-    input: ""
+    input: "",
+    top: 5
   },
   methods: {
     growthColor: function(change) {
@@ -21,7 +22,7 @@ const app = new Vue({
             if (a.price > b.price) return -1;
             if (a.price < b.price) return 1;
           });
-          let top8 = data.slice(0, 8);
+          let top8 = data.slice(0, parseInt(this.top));
           this.coins = top8;
         });
     },
@@ -52,7 +53,10 @@ const app = new Vue({
   },
   template: `
   <div class="container has-text-centered">
-    <h1 class="title big-title">Top Cryptocurrency By Price</h1>
+    <div>
+      <h1 class="title big-title">Top Cryptocurrency By Price</h1>
+      <input type="number" class="input column is-one-fifth input-number" v-model="top" v-on:input="getCoins()" placeholder="Cryptocurrencies to show - example: 8">
+    </div>
     <div class="card bitcoin-card">
       <div class="card-content has-text-centered" >
         <p class="title">Search</p>
