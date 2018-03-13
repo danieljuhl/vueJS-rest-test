@@ -27,7 +27,7 @@ const app = new Vue({
         });
     },
     fetchSingleCoin: function(input) {
-      coinSymbol = input.toUpperCase();
+      coinSymbol = input.toUpperCase().replace(/ /g, "");
       fetch("http://coincap.io/page/" + coinSymbol)
         .then(response => response.json())
         .then(data => {
