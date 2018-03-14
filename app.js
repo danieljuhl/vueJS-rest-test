@@ -9,11 +9,6 @@ const app = new Vue({
     top: 5
   },
   methods: {
-    growthColor: function(change) {
-      if (change < 0) {
-        return;
-      }
-    },
     sliceCoins: function(data, top) {
       this.coinsSlices = data.slice(0, parseInt(top));
     },
