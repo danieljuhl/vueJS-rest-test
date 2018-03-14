@@ -3,4 +3,4 @@ v0: A simple and quick test with VueJS fetching data from the CoinCap.io REST AP
 
 [Demo](http://michaelmichael.dk/vuerest/)
 
-![alt text](https://i.imgur.com/AbvHMGd.png)
+![alt text](https://i.imgur.com/N3diW2k.png)
