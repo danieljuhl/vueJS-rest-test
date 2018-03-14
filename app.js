@@ -2,9 +2,10 @@ const app = new Vue({
   el: "#app",
   data: {
     coins: [],
+    coinsSlices: [],
     specificCoin: { init: false },
-    refresh: "",
     input: "",
+    refresh: "",
     top: 5
   },
   methods: {
@@ -13,11 +14,10 @@ const app = new Vue({
         return;
       }
     },
+    sliceCoins: function(data, top) {
+      this.coinsSlices = data.slice(0, parseInt(top));
+    },
     getCoins: function() {
-      if (parseInt(this.top) === 0 || this.top === "") {
-        this.coins.length = 0;
-        return;
-      }
       fetch("http://coincap.io/front")
         .then(response => response.json())
         .then(data => {
@@ -26,8 +26,8 @@ const app = new Vue({
             if (a.price > b.price) return -1;
             if (a.price < b.price) return 1;
           });
-          let top8 = data.slice(0, parseInt(this.top));
-          this.coins = top8;
+          this.coins = data;
+          this.sliceCoins(this.coins, this.top);
         });
     },
     fetchSingleCoin: function(input) {
@@ -48,7 +48,7 @@ const app = new Vue({
       function() {
         this.getCoins();
       }.bind(this),
-      5000
+      600000
     );
   },
   destroyed: function() {
@@ -60,7 +60,7 @@ const app = new Vue({
     <div>
       <h1 class="title big-title">Top Cryptocurrency By Price</h1>
       <p class="has-text-grey-light">Amount of cryptocurrencies to show:</p>
-      <input type="number" class="input column is-one-fifth input-number" v-model="top" v-on:input="getCoins()" placeholder="Example: 5">
+      <input type="number" class="input column is-one-fifth input-number" v-model="top" v-on:input="sliceCoins(coins, top)" placeholder="Example: 5">
     </div>
     <div class="card bitcoin-card">
       <div class="card-content has-text-centered" >
@@ -73,7 +73,7 @@ const app = new Vue({
           </div>
         </div>
       </div>
-    <div class="card bitcoin-card" v-for="coin in coins">
+    <div class="card bitcoin-card" v-for="coin in coinsSlices">
       <div class="card-content">
         <p class="title">{{coin.long}} ({{coin.short}})</p>
         <p class="subtitle">$\{{coin.price}}</p>
