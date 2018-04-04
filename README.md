@@ -1,5 +1,5 @@
 # Vue REST Test
-## Using coincap.io API
+### Using coincap.io API
 
 [Demo](http://michaelmichael.dk/vuerest/)
 
