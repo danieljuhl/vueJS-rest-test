@@ -19,8 +19,8 @@
         </div>
         <div v-else-if="isLoading">
           <div class="card-content">
-            <object data="/static/spinner.svg" type="image/svg+xml">
-              <img src="/static/spinner.gif">
+            <object data="static/spinner.svg" type="image/svg+xml">
+              <img src="static/spinner.gif">
             </object>
           </div>
         </div>
