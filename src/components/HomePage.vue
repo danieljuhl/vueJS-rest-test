@@ -43,8 +43,7 @@ export default {
             coins: [],
             coinsSlices: [],
             specificCoin: { init: false },
-            input: 'etc',
-            refresh: '',
+            input: '',
             top: 5,
         };
     },
@@ -59,7 +58,6 @@ export default {
                         if (a.price < b.price) return 1;
                     });
                     this.coins = result.data;
-                    console.log(result);
                     this.sliceCoins(this.coins, this.top);
                 })
                 .catch(err => {

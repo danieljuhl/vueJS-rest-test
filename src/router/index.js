@@ -6,11 +6,6 @@ Vue.use(Router);
 
 export default new Router({
   routes: [
-    // {
-    //   path: '/',
-    //   name: 'Homepage',
-    //   component: Homepage,
-    // },
     {
       path: '/coin/:id',
       name: 'Single',

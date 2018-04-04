@@ -35,7 +35,6 @@ export default {
             .get('http://coincap.io/page/' + this.$route.params.id)
             .then(res => {
                 this.coin = res.data;
-                console.log(res.data);
             })
             .catch(err => {
                 console.log(err);
