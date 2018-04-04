@@ -3,7 +3,6 @@
 [Demo](http://michaelmichael.dk/vuerest/)
 
 ![alt text](https://i.imgur.com/k4NkqiL.png)
->>>>>>> 70bacc06ffc31bf373cad2ae8f984e3c7fc8bfcf
 
 =======
 
