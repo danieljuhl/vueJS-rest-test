@@ -1,3 +1,8 @@
+body {
+  background-image: linear-gradient(to bottom, #9795f0 0%, #fbc8d4 100%);
+  min-height: 100vh;
+}
+
 .bitcoin-card {
   display: inline-block;
   margin: 4%;
@@ -32,12 +37,28 @@
 }
 
 .big-title {
-  margin-top: 50px;
   margin-bottom: 0;
+  padding-top: 40px;
 }
 
 .input-number {
   text-align: center;
   margin: 0 auto;
   margin-top: 10px;
+}
+
+.title {
+  text-transform: capitalize;
+}
+
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
+
+.has-text-white {
+  color: #fff;
 }
