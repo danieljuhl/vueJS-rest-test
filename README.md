@@ -3,7 +3,7 @@
 
 [Demo](http://michaelmichael.dk/vuerest/)
 
-![alt text](https://i.imgur.com/e1gKDa0.png)
+![alt text](https://i.imgur.com/yhdtS3e.png)
 
 ## Build Setup
 
