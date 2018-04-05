@@ -1,10 +1,23 @@
 <template>
   <div class="container has-text-centered">
     <div>
-      <h1 class="title big-title">Top Cryptocurrency By Price</h1>
-      <p class="has-text-grey-light">Amount of cryptocurrencies to show:</p>
+      <h1 class="title big-title has-text-white">Top Cryptocurrency By {{selectedSort}}</h1>
+      <p class="has-text-white">Amount of cryptocurrencies to show:</p>
       <input type="number" class="input column is-one-fifth input-number" v-model="top" v-on:input="sliceCoins(coins, top)" placeholder="Example: 5">
-    </div>
+      <div class="control column is-one-fifth input-number">
+          <div class="select">
+            <select
+            id="priority"
+            v-model="selectedSort"
+            @input="getCoins">
+                <option 
+                v-for="sort in sortOptions" 
+                :key="sort.value"
+                :value="sort.value">{{sort.output}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
     <div class="card bitcoin-card">
       <div class="card-content has-text-centered" >
         <p class="title">Search</p>
@@ -22,8 +35,8 @@
         <p class="subtitle">{{coin.price | toCurrency}}</p>
       </div>
       <p class="subtitle">24 hour change:
-        <span v-if="coin.cap24hrChange >= 0" class="growth-plus">{{coin.cap24hrChange}}</span>
-        <span v-else class="growth-minus">{{coin.cap24hrChange}}</span>
+        <span v-if="coin.cap24hrChange >= 0" class="growth-plus">{{coin.cap24hrChange | toCurrency}}</span>
+        <span v-else class="growth-minus">{{coin.cap24hrChange | toCurrency }}</span>
       </p>
       <router-link :to="{ name: 'Single', params: {id: coin.short} }" class="button">See more</router-link>
     </div>
@@ -45,17 +58,40 @@ export default {
             specificCoin: { init: false },
             input: '',
             top: 5,
+            sortOptions: [
+                {
+                    value: 'price',
+                    output: 'Price',
+                },
+                {
+                    value: 'supply',
+                    output: 'Supply',
+                },
+                {
+                    value: 'volume',
+                    output: 'Volume',
+                },
+                {
+                    value: 'cap24hrChange',
+                    output: '24 Hour Change',
+                },
+            ],
+            selectedSort: 'price',
         };
     },
     methods: {
         getCoins: function() {
+            var self = this;
             axios
                 .get('http://coincap.io/front')
                 .then(result => {
                     result.data.sort(function(a, b) {
-                        if (a.price == b.price) return 0;
-                        if (a.price > b.price) return -1;
-                        if (a.price < b.price) return 1;
+                        if (a[self.selectedSort] == b[self.selectedSort])
+                            return 0;
+                        if (a[self.selectedSort] > b[self.selectedSort])
+                            return -1;
+                        if (a[self.selectedSort] < b[self.selectedSort])
+                            return 1;
                     });
                     this.coins = result.data;
                     this.sliceCoins(this.coins, this.top);
