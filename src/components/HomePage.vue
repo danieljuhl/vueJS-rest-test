@@ -1,7 +1,7 @@
 <template>
   <div class="container has-text-centered">
     <div>
-      <h1 class="title big-title has-text-white">Top Cryptocurrency By {{selectedSort}}</h1>
+      <h1 class="title big-title has-text-white">Top Cryptocurrency By {{selectedOutput}}</h1>
       <p class="has-text-white">Amount of cryptocurrencies to show:</p>
       <input type="number" class="input column is-one-fifth input-number" v-model="top" v-on:input="sliceCoins(coins, top)" placeholder="Example: 5">
       <div class="control column is-one-fifth input-number">
@@ -77,6 +77,7 @@ export default {
                 },
             ],
             selectedSort: 'price',
+            selectedOutput: 'Price',
         };
     },
     methods: {
@@ -129,6 +130,15 @@ export default {
                 minimumFractionDigits: 0,
             });
             return formatter.format(value);
+        },
+    },
+    watch: {
+        selectedSort: function() {
+            for (let i = 0; i < this.sortOptions.length; i++) {
+                if (this.sortOptions[i].value == this.selectedSort) {
+                    this.selectedOutput = this.sortOptions[i].output;
+                }
+            }
         },
     },
 };
