@@ -192,4 +192,17 @@ export default {
 .coin-list-container {
     overflow-y: scroll;
 }
+
+.coin-list-container::-webkit-scrollbar {
+    width: 0.25em;
+}
+
+.coin-list-container::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.coin-list-container::-webkit-scrollbar-thumb {
+    background-color: #9795f0;
+    outline: 1px solid slategrey;
+}
 </style>
