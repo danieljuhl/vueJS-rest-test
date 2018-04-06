@@ -171,9 +171,13 @@ export default {
 
 <style scoped>
 .coin-container {
-    min-height: 400px;
-    max-height: 600px;
     display: flex;
+}
+
+.coin-list-container {
+    min-height: 400px;
+    height: 100%;
+    max-height: 800px;
 }
 
 @media (max-width: 600px) {

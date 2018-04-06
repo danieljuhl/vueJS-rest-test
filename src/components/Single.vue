@@ -18,6 +18,8 @@
           <p class="subtitle">
             <strong>24 Hour Volume:</strong> {{coin.volume | toCurrency}}
           </p>
+          <button @click="showChart" class="button is-primary chart-button">Show Chart</button>
+          <canvas id="chartBox" ref="chart"></canvas>
         </div>
         <div v-else-if="isLoading">
           <div class="card-content">
@@ -40,9 +42,10 @@ export default {
             coin: {},
             isDisplayed: 'none',
             isLoading: true,
+            market_cap: [],
         };
     },
-    created: function() {
+    mounted: function() {
         axios
             .get('http://coincap.io/page/' + this.$route.params.id)
             .then(res => {
@@ -53,7 +56,63 @@ export default {
                 this.isLoading = false;
                 console.log(err);
             });
+        axios
+            .get('http://coincap.io/history/1day/' + this.$route.params.id)
+            .then(res => {
+                this.market_cap = res.data;
+            })
+            .catch(err => {
+                console.log(err);
+            });
         this.isDisplayed = 'block';
+        // this.$nextTick(function() {
+        //   Auto show chart
+        // });
+    },
+    methods: {
+        showChart: function() {
+            console.log(this.$refs.chart);
+            let ar = [];
+            const priceData = this.market_cap.price;
+            for (let i = 0; i + 1 < priceData.length; i++) {
+                priceData[i][0];
+                ar.push({ x: priceData[i][0], y: priceData[i][1] });
+            }
+            var data = ar;
+            let myChart = new Chart(this.$refs.chart, {
+                responsive: true,
+                type: 'line',
+                data: {
+                    datasets: [
+                        {
+                            data: data,
+                            borderColor: '#9795f0',
+                            fill: false,
+                        },
+                    ],
+                },
+                options: {
+                    scales: {
+                        xAxes: [
+                            {
+                                type: 'time',
+                                gridLines: {
+                                    display: false,
+                                },
+                            },
+                        ],
+                        yAxes: [
+                            {
+                                gridLines: {
+                                    display: false,
+                                },
+                            },
+                        ],
+                    },
+                    legend: false,
+                },
+            });
+        },
     },
     filters: {
         toCurrency: function(value) {
@@ -72,24 +131,8 @@ export default {
 </script>
 
 <style scoped>
-.modal {
-    position: fixed;
-    z-index: 10;
-    padding-top: 100px;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-
-    background-image: linear-gradient(to top, #9795f090 0%, #fbc8d475 100%);
-}
-
-.modal-content {
-    background-color: #fefefe;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 400px;
+.chart-button {
+    margin: 0 auto;
+    display: block;
 }
 </style>
