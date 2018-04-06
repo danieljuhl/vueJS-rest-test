@@ -5,7 +5,7 @@ TODO: Add Chart.js for coin timeline
 
 [Demo](http://michaelmichael.dk/vuerest/)
 
-![alt text](https://i.imgur.com/XFj5KLd.png)
+![alt text](https://i.imgur.com/bGkI5EH.png)
 
 ## Build Setup
 
