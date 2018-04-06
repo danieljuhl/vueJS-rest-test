@@ -15,10 +15,6 @@
                             <button class="button is-primary" v-on:click="searchSingleCoin()">Search</button>
                         </div>
                     </div>
-                    <div>
-                        <p class="subtitle" v-if="specificCoin.id">{{specificCoin.id}}: ${{specificCoin.price}}</p>
-                        <p class="subtitle" v-else-if="Object.keys(specificCoin).length === 0">Currency not found</p>
-                    </div>
             </div>
             <div class="column">
                     <p class="title">Sort all by</p>
@@ -138,6 +134,7 @@ export default {
         },
         searchSingleCoin: function() {
             const coinSymbol = this.input.toUpperCase().replace(/ /g, '');
+            if (coinSymbol.length === 0) return;
             router.push({ name: 'Single', params: { id: coinSymbol } });
         },
     },

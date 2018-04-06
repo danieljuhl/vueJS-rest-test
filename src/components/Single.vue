@@ -1,7 +1,7 @@
 <template>
     <div>
       <div>
-        <div v-if="!isLoading">
+        <div v-if="!isLoading && Object.keys(coin).length !== 0">
           <div class="card-content">
             <p class="title">{{ coin.display_name }}</p>
             <p class="subtitle">{{ coin.id }} (Rank: {{ coin.rank }})</p>
