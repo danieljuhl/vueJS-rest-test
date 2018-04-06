@@ -9,10 +9,10 @@
                     <p class="title">Search</p>
                     <div class="field has-addons input-addon">
                         <div class="control">
-                            <input class="input" type="text" v-model="input" v-on:keydown.enter="fetchSingleCoin()" placeholder="Example: BTC">
+                            <input class="input" type="text" v-model="input" v-on:keydown.enter="searchSingleCoin()" placeholder="Example: BTC">
                         </div>
                         <div class="control">
-                            <button class="button is-primary" v-on:click="fetchSingleCoin()">See price</button>
+                            <button class="button is-primary" v-on:click="searchSingleCoin()">Search</button>
                         </div>
                     </div>
                     <div>
@@ -69,6 +69,7 @@
 <script>
 import axios from 'axios';
 import Single from '../components/Single.vue';
+import router from '../router';
 
 export default {
     name: 'Homepage',
@@ -79,7 +80,7 @@ export default {
             coins: [],
             coinsSlices: [],
             specificCoin: { init: false },
-            input: '',
+            input: 'BTC',
             top: 15,
             sortOptions: [
                 {
@@ -134,6 +135,10 @@ export default {
                 .then(data => {
                     this.specificCoin = data;
                 });
+        },
+        searchSingleCoin: function() {
+            const coinSymbol = this.input.toUpperCase().replace(/ /g, '');
+            router.push({ name: 'Single', params: { id: coinSymbol } });
         },
     },
     created: function() {
