@@ -71,7 +71,6 @@ export default {
     },
     methods: {
         showChart: function() {
-            console.log(this.$refs.chart);
             let ar = [];
             const priceData = this.market_cap.price;
             for (let i = 0; i + 1 < priceData.length; i++) {
