@@ -1,9 +1,11 @@
 # Vue REST Test
 ### Using coincap.io API
 
+TODO: Add Chart.js for coin timeline
+
 [Demo](http://michaelmichael.dk/vuerest/)
 
-![alt text](https://i.imgur.com/qC54wMw.png)
+![alt text](https://i.imgur.com/XFj5KLd.png)
 
 ## Build Setup
 
