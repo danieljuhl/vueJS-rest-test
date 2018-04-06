@@ -84,3 +84,13 @@ body {
 .has-text-white {
   color: #fff;
 }
+
+.router-link-exact-active .title,
+.router-link-exact-active .card-content {
+  color: #9795f0;
+}
+
+.router-link-exact-active .subtitle,
+.router-link-exact-active .subtitle span {
+  color: #a7a6f8;
+}
