@@ -1,44 +1,67 @@
 <template>
   <div class="container has-text-centered">
-    <div>
-      <h1 class="title big-title has-text-white">Top Cryptocurrency By {{selectedOutput}}</h1>
-      <p class="has-text-white">Amount of cryptocurrencies to show:</p>
-      <input type="number" class="input column is-one-fifth input-number" v-model="top" v-on:input="sliceCoins(coins, top)" placeholder="Example: 5">
-      <div class="control column is-one-fifth input-number">
-          <div class="select">
-            <select
-            id="priority"
-            v-model="selectedSort"
-            @input="getCoins">
-                <option 
-                v-for="sort in sortOptions" 
-                :key="sort.value"
-                :value="sort.value">{{sort.output}}</option>
-            </select>
-          </div>
+    <div class="section">
+        <h1 class="title big-title has-text-white gradient-title"><span>Top Cryptocurrency By {{selectedOutput}}</span></h1>
+    </div>
+    <div class="container box">
+        <div class="columns">
+            <div class="column">
+                    <p class="title">Search</p>
+                    <div class="field has-addons input-addon">
+                        <div class="control">
+                            <input class="input" type="text" v-model="input" v-on:keydown.enter="fetchSingleCoin()" placeholder="Example: BTC">
+                        </div>
+                        <div class="control">
+                            <button class="button is-primary" v-on:click="fetchSingleCoin()">See price</button>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="subtitle" v-if="specificCoin.id">{{specificCoin.id}}: ${{specificCoin.price}}</p>
+                        <p class="subtitle" v-else-if="Object.keys(specificCoin).length === 0">Currency not found</p>
+                    </div>
+            </div>
+            <div class="column">
+                    <p class="title">Sort all by</p>
+                    <div class="control input-center">
+                        <div class="select">
+                            <select
+                            id="priority"
+                            v-model="selectedSort"
+                            @input="getCoins">
+                                <option 
+                                v-for="sort in sortOptions" 
+                                :key="sort.value"
+                                :value="sort.value">{{sort.output}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            <div class="column">
+                <p class="title">Amount</p>
+                <input type="number" class="input input-center input-reset" v-model="top" v-on:input="sliceCoins(coins, top)" placeholder="Example: 5">
+            </div>
         </div>
-      </div>
-    <div class="card bitcoin-card">
-      <div class="card-content has-text-centered" >
-        <p class="title">Search</p>
-          <input class="input" type="text" v-model="input" v-on:keydown.enter="fetchSingleCoin()" placeholder="Example: BTC">
-          <button class="button is-primary" v-on:click="fetchSingleCoin()">See price</button>
-          <div>
-            <p class="subtitle" v-if="specificCoin.id">{{specificCoin.id}}: ${{specificCoin.price}}</p>
-            <p class="subtitle" v-else-if="Object.keys(specificCoin).length === 0">Currency not found</p>
-          </div>
+        <div class="columns coin-container">
+            <div class="column coin-list-container">
+                <div v-for="coin in coinsSlices" :key="coin.short" class="bitcoin-card">
+                    <router-link :to="{ name: 'Single', params: {id: coin.short} }">
+                    <div >
+                        <div class="card-content">
+                            <p class="title">{{coin.long}} ({{coin.short}})</p>
+                            <p class="subtitle">{{coin.price | toCurrency}}</p>
+                        </div>
+                        <p class="subtitle">24 hour change:
+                            <span v-if="coin.cap24hrChange >= 0" class="growth-plus">{{coin.cap24hrChange | toCurrency}}</span>
+                            <span v-else class="growth-minus">{{coin.cap24hrChange | toCurrency }}</span>
+                        </p>
+                        </div>
+                    </router-link>
+                </div>
+            </div>
+            <div class="column is-three-quarters">
+                <router-view :key="$route.name + ($route.params.id || '')"/>
+            </div>
         </div>
-      </div>
-    <div class="card bitcoin-card" v-for="coin in coinsSlices" :key="coin.short">
-      <div class="card-content">
-        <p class="title">{{coin.long}} ({{coin.short}})</p>
-        <p class="subtitle">{{coin.price | toCurrency}}</p>
-      </div>
-      <p class="subtitle">24 hour change:
-        <span v-if="coin.cap24hrChange >= 0" class="growth-plus">{{coin.cap24hrChange | toCurrency}}</span>
-        <span v-else class="growth-minus">{{coin.cap24hrChange | toCurrency }}</span>
-      </p>
-      <router-link :to="{ name: 'Single', params: {id: coin.short} }" class="button">See more</router-link>
     </div>
   </div>
 </template>
@@ -57,7 +80,7 @@ export default {
             coinsSlices: [],
             specificCoin: { init: false },
             input: '',
-            top: 5,
+            top: 15,
             sortOptions: [
                 {
                     value: 'price',
@@ -145,5 +168,28 @@ export default {
 </script>
 
 <style scoped>
+.coin-container {
+    min-height: 400px;
+    max-height: 600px;
+    display: flex;
+}
 
+@media (max-width: 600px) {
+    .gradient-title {
+        width: 80%;
+        font-size: 2rem;
+    }
+    .coin-container {
+        flex-direction: column;
+        min-height: 600px;
+        border-top: 1px solid #f7f7f7;
+    }
+    .coin-list-container {
+        border-top: 1px solid #f7f7f7;
+        order: 1;
+    }
+}
+.coin-list-container {
+    overflow-y: scroll;
+}
 </style>

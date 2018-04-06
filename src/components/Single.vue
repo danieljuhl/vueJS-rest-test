@@ -1,6 +1,6 @@
 <template>
-    <div class="modal" :style="{display: isDisplayed}">
-      <div class="modal-content">
+    <div>
+      <div>
         <div v-if="!isLoading">
           <div class="card-content">
             <p class="title">{{ coin.display_name }}</p>
@@ -15,7 +15,6 @@
           <p class="subtitle">
             24 Hour Volume: {{coin.volume | toCurrency}}
           </p>
-          <button class="button is-primary" @click="$router.go(-1)">Close</button>
         </div>
         <div v-else-if="isLoading">
           <div class="card-content">
