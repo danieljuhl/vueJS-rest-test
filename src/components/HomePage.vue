@@ -80,7 +80,7 @@ export default {
             coins: [],
             coinsSlices: [],
             specificCoin: { init: false },
-            input: 'BTC',
+            input: '',
             top: 15,
             sortOptions: [
                 {
