@@ -4,16 +4,19 @@
         <div v-if="!isLoading">
           <div class="card-content">
             <p class="title">{{ coin.display_name }}</p>
-            <p class="subtitle">{{ coin.id }}</p>
+            <p class="subtitle">{{ coin.id }} (Rank: {{ coin.rank }})</p>
           </div>
           <p class="subtitle">
-            Market Cap: {{coin.market_cap | toCurrency}}
+            <strong>Price:</strong> {{coin.price | toCurrency}}
           </p>
           <p class="subtitle">
-            Supply: {{coin.supply | toCurrency}}
+            <strong>Supply:</strong> {{coin.supply | toCurrency}}
           </p>
           <p class="subtitle">
-            24 Hour Volume: {{coin.volume | toCurrency}}
+            <strong>Market Cap:</strong> {{coin.market_cap | toCurrency}}
+          </p>
+          <p class="subtitle">
+            <strong>24 Hour Volume:</strong> {{coin.volume | toCurrency}}
           </p>
         </div>
         <div v-else-if="isLoading">
