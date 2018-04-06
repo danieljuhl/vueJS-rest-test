@@ -58,7 +58,7 @@
                     </router-link>
                 </div>
             </div>
-            <div class="column is-three-quarters">
+            <div class="column is-two-thirds">
                 <router-view :key="$route.name + ($route.params.id || '')"/>
             </div>
         </div>
