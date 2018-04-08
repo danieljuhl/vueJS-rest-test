@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import 'whatwg-fetch';
 
 export default {
     name: 'Single',
@@ -46,23 +46,32 @@ export default {
         };
     },
     mounted: function() {
-        axios
-            .get('http://coincap.io/page/' + this.$route.params.id)
-            .then(res => {
-                this.isLoading = false;
-                this.coin = res.data;
+        fetch('http://coincap.io/page/' + this.$route.params.id)
+            .then(function(response) {
+                if (response.ok) {
+                    return response.json();
+                }
             })
-            .catch(err => {
+            .then(data => {
                 this.isLoading = false;
-                console.log(err);
+                this.coin = data;
+            })
+            .catch(function(error) {
+                this.isLoading = false;
+                console.log('Error fetching data: ', error.message);
             });
-        axios
-            .get('http://coincap.io/history/7day/' + this.$route.params.id)
-            .then(res => {
-                this.market_cap = res.data;
+
+        fetch('http://coincap.io/history/7day/' + this.$route.params.id)
+            .then(function(response) {
+                if (response.ok) {
+                    return response.json();
+                }
             })
-            .catch(err => {
-                console.log(err);
+            .then(data => {
+                this.market_cap = data;
+            })
+            .catch(function(error) {
+                console.log('Error fetching data: ', error.message);
             });
         this.isDisplayed = 'block';
         // this.$nextTick(function() {

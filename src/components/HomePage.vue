@@ -63,7 +63,8 @@
 </template>
 
 <script>
-import axios from 'axios';
+import 'whatwg-fetch';
+
 import Single from '../components/Single.vue';
 import router from '../router';
 
@@ -96,17 +97,21 @@ export default {
                     output: '24 Hour Change',
                 },
             ],
-            selectedSort: 'price',
-            selectedOutput: 'Price',
+            selectedSort: 'volume',
+            selectedOutput: 'Volume',
         };
     },
     methods: {
         getCoins: function() {
             var self = this;
-            axios
-                .get('http://coincap.io/front')
-                .then(result => {
-                    result.data.sort(function(a, b) {
+            fetch('http://coincap.io/front/')
+                .then(function(response) {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                })
+                .then(data => {
+                    data.sort(function(a, b) {
                         if (a[self.selectedSort] == b[self.selectedSort])
                             return 0;
                         if (a[self.selectedSort] > b[self.selectedSort])
@@ -114,11 +119,11 @@ export default {
                         if (a[self.selectedSort] < b[self.selectedSort])
                             return 1;
                     });
-                    this.coins = result.data;
+                    this.coins = data;
                     this.sliceCoins(this.coins, this.top);
                 })
-                .catch(err => {
-                    this.err = err;
+                .catch(function(error) {
+                    console.log('Error fetching data: ', error.message);
                 });
         },
         sliceCoins: function(data, top) {
