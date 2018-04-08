@@ -1,11 +1,21 @@
-# Vue REST Test
-### Using coincap.io API
+# VueCrypto
+### Using coincap.io API % VueJS
 
-TODO: Add Chart.js for coin timeline
+An app to look up information about your favorite cryptocurrency
 
-[Demo](http://michaelmichael.dk/vuerest/)
+**Functionality:**
+* Search for individual cryptos
+* Sort by top cryptos
+* Choose amount of cryptos to show
+* See timeline of price change
+* See data of selected crypto
+* Progressive Web App
+  - Service Worker for offline access
 
-![alt text](https://i.imgur.com/bGkI5EH.png)
+
+[Demo](https://michaelmichael.dk/vuerest/)
+
+[<img src="https://i.imgur.com/bGkI5EH.png">](https://michaelmichael.dk/vuerest/)
 
 ## Build Setup
 
