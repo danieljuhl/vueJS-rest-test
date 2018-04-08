@@ -32,8 +32,16 @@ self.addEventListener('fetch', function(event) {
         // if match is found, return it
         return response;
       } else {
-        // If no response is found, fetch from the internet
-        return fetch(event.request);
+        // 1. If no response is found, fetch from the internet
+        // 2. Add response dynamically to cache
+        return fetch(event.request).then(function(res) {
+          // 2.1 Give response back to the requester before caching
+          return caches.open('dynamic').then(function(cache) {
+            // 2.2 Add the cloned response to dynamic cache
+            cache.put(event.request.url, res.clone());
+            return res;
+          });
+        });
       }
     }),
   );
