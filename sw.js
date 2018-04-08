@@ -33,15 +33,18 @@ self.addEventListener('fetch', function(event) {
         return response;
       } else {
         // 1. If no response is found, fetch from the internet
-        // 2. Add response dynamically to cache
-        return fetch(event.request).then(function(res) {
-          // 2.1 Give response back to the requester before caching
-          return caches.open('dynamic').then(function(cache) {
-            // 2.2 Add the cloned response to dynamic cache
-            cache.put(event.request.url, res.clone());
-            return res;
+        return fetch(event.request)
+          .then(function(res) {
+            // 2 Give response back to the requester before caching
+            return caches.open('dynamic').then(function(cache) {
+              // 3 Add the cloned response to dynamic cache
+              cache.put(event.request.url, res.clone());
+              return res;
+            });
+          })
+          .catch(function(err) {
+            console.log(err);
           });
-        });
       }
     }),
   );
