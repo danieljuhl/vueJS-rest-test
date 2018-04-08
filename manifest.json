@@ -1,0 +1,14 @@
+{
+  "name": "VueCryptos",
+  "short_name": "VueCryptos",
+  "start_url": "/index.html",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#9795f0",
+  "theme_color": "#9795f0",
+  "description": "See the latest cryptocurrency price data",
+  "dir": "ltr",
+  "lang": "en-US",
+  "orientation": "portrait-primary",
+  "icons": []
+}
