@@ -23,7 +23,7 @@
                             <select
                             id="priority"
                             v-model="selectedSort"
-                            @input="getCoins">
+                            @change="getCoins">
                                 <option 
                                 v-for="sort in sortOptions" 
                                 :key="sort.value"
