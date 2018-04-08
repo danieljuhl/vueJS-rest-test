@@ -39,23 +39,25 @@
         </div>
         <div class="columns coin-container">
             <div class="column coin-list-container">
-                <div v-for="coin in coinsSlices" :key="coin.short" class="bitcoin-card">
-                    <router-link :to="{ name: 'Single', params: {id: coin.short} }">
-                    <div >
-                        <div class="card-content">
-                            <p class="title">{{coin.long}} ({{coin.short}})</p>
-                            <p class="subtitle">{{coin.price | toCurrency}}</p>
-                        </div>
-                        <p class="subtitle">24 hour change:
-                            <span v-if="coin.cap24hrChange >= 0" class="growth-plus">{{coin.cap24hrChange | toCurrency}}</span>
-                            <span v-else class="growth-minus">{{coin.cap24hrChange | toCurrency }}</span>
-                        </p>
-                        </div>
-                    </router-link>
-                </div>
+                <transition-group name="fadeFromLeftToRight">
+                    <div v-for="coin in coinsSlices" :key="coin.short" class="bitcoin-card">
+                        <router-link :to="{ name: 'Single', params: {id: coin.short} }">
+                        <div >
+                            <div class="card-content">
+                                <p class="title">{{coin.long}} ({{coin.short}})</p>
+                                <p class="subtitle">{{coin.price | toCurrency}}</p>
+                            </div>
+                            <p class="subtitle">24 hour change:
+                                <span v-if="coin.cap24hrChange >= 0" class="growth-plus">{{coin.cap24hrChange | toCurrency}}</span>
+                                <span v-else class="growth-minus">{{coin.cap24hrChange | toCurrency }}</span>
+                            </p>
+                            </div>
+                        </router-link>
+                    </div>
+                </transition-group>
             </div>
             <div class="column is-two-thirds">
-                <transition name="fade">
+                <transition name="fadeFromLeft">
                     <router-view :key="$route.name + ($route.params.id || '')"/>
                 </transition>
             </div>
@@ -220,16 +222,30 @@ export default {
     outline: 1px solid slategrey;
 }
 
-.fade-enter-active {
+.fadeFromLeft-enter-active {
     transition: all 0.5s;
 }
-.fade-enter {
+.fadeFromLeft-enter {
     opacity: 0;
     transform: translateX(-50px);
 }
 
-.fade-leave {
+.fadeFromLeft-leave {
     opacity: 0;
     transform: translateX(-50px);
+}
+
+.fadeFromLeftToRight-enter-active,
+.fadeFromLeftToRight-leave-active {
+    transition: all 0.5s;
+}
+
+.fadeFromLeftToRight-enter {
+    transform: translateX(-50px);
+    opacity: 0;
+}
+.fadeFromLeftToRight-leave-to {
+    transform: translateX(50px);
+    opacity: 0;
 }
 </style>
