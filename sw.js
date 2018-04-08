@@ -1,5 +1,23 @@
 self.addEventListener('install', function(event) {
   console.log('[Service worker]: Installing Service Worker: ', event);
+  event.waitUntil(
+    caches.open('static').then(function(cache) {
+      console.log('[Service Worker] Precaching App Shell');
+      cache.addAll([
+        './',
+        'index.html',
+        'https://cdn.jsdelivr.net/npm/moment@latest/moment.min.js',
+        'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.min.js',
+        'dist/build.js',
+        'https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css',
+        'static/style.css',
+        'static/spinner.svg',
+        'static/spinner.gif',
+      ]);
+      cache.add('index.html');
+      cache.add('dist/build.js');
+    }),
+  );
 });
 
 self.addEventListener('activate', function(event) {
@@ -8,6 +26,15 @@ self.addEventListener('activate', function(event) {
 });
 
 self.addEventListener('fetch', function(event) {
-  console.log('[Service worker]: Service Worker Fetched Something: ', event);
-  event.respondWith(fetch(event.request));
+  event.respondWith(
+    caches.match(event.request).then(function(response) {
+      if (response) {
+        // if match is found, return it
+        return response;
+      } else {
+        // If no response is found, fetch from the internet
+        return fetch(event.request);
+      }
+    }),
+  );
 });
