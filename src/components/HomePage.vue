@@ -109,7 +109,7 @@ export default {
     methods: {
         getCoins: function() {
             var self = this;
-            fetch('http://coincap.io/front/')
+            fetch('https://coincap.io/front/')
                 .then(function(response) {
                     if (response.ok) {
                         return response.json();
@@ -136,7 +136,7 @@ export default {
         },
         fetchSingleCoin: function() {
             let coinSymbol = this.input.toUpperCase().replace(/ /g, '');
-            fetch('http://coincap.io/page/' + coinSymbol)
+            fetch('https://coincap.io/page/' + coinSymbol)
                 .then(response => response.json())
                 .then(data => {
                     this.specificCoin = data;

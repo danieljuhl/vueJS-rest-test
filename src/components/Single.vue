@@ -47,7 +47,7 @@ export default {
         };
     },
     mounted: function() {
-        fetch('http://coincap.io/page/' + this.$route.params.id)
+        fetch('https://coincap.io/page/' + this.$route.params.id)
             .then(function(response) {
                 if (response.ok) {
                     return response.json();
@@ -62,7 +62,7 @@ export default {
                 console.log('Error fetching data: ', error.message);
             });
 
-        fetch('http://coincap.io/history/7day/' + this.$route.params.id)
+        fetch('https://coincap.io/history/7day/' + this.$route.params.id)
             .then(function(response) {
                 if (response.ok) {
                     return response.json();
