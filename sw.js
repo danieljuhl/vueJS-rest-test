@@ -1,7 +1,11 @@
+// Cache versioning - Needs to be updated to cache new assets.
+var STATIC_CACHE_NAME = 'static-08042018-1';
+var DYNAMIC_CACHE_NAME = 'dynamic-08042018-1';
+
 self.addEventListener('install', function(event) {
   console.log('[Service worker]: Installing Service Worker: ', event);
   event.waitUntil(
-    caches.open('static').then(function(cache) {
+    caches.open(STATIC_CACHE_NAME).then(function(cache) {
       console.log('[Service Worker] Precaching App Shell');
       cache.addAll([
         './',
@@ -22,6 +26,20 @@ self.addEventListener('install', function(event) {
 
 self.addEventListener('activate', function(event) {
   console.log('[Service worker]: Service Worker Activated: ', event);
+  // Clean up cache - Wait until returned from promise
+  event.waitUntil(
+    // 1. Get keys
+    caches.keys().then(function(keyList) {
+      return Promise.all(
+        // 2. Loop through caches and remove caches not corresponding to current used cache
+        keyList.map(function(key) {
+          if (key !== STATIC_CACHE_NAME && key !== DYNAMIC_CACHE_NAME) {
+            return caches.delete(key);
+          }
+        }),
+      );
+    }),
+  );
   return self.clients.claim();
 });
 
@@ -36,7 +54,7 @@ self.addEventListener('fetch', function(event) {
         return fetch(event.request)
           .then(function(res) {
             // 2 Give response back to the requester before caching
-            return caches.open('dynamic').then(function(cache) {
+            return caches.open(DYNAMIC_CACHE_NAME).then(function(cache) {
               // 3 Add the cloned response to dynamic cache
               cache.put(event.request.url, res.clone());
               return res;
