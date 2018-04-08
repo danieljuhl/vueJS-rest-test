@@ -57,7 +57,7 @@ export default {
                 console.log(err);
             });
         axios
-            .get('http://coincap.io/history/1day/' + this.$route.params.id)
+            .get('http://coincap.io/history/7day/' + this.$route.params.id)
             .then(res => {
                 this.market_cap = res.data;
             })
@@ -71,20 +71,20 @@ export default {
     },
     methods: {
         showChart: function() {
-            let ar = [];
+            let timelineArray = [];
             const priceData = this.market_cap.price;
+            // 1. remove latest data point to prevent gap
+            // 2. convert data to fit chart
             for (let i = 0; i + 1 < priceData.length; i++) {
-                priceData[i][0];
-                ar.push({ x: priceData[i][0], y: priceData[i][1] });
+                timelineArray.push({ x: priceData[i][0], y: priceData[i][1] });
             }
-            var data = ar;
             let myChart = new Chart(this.$refs.chart, {
                 responsive: true,
                 type: 'line',
                 data: {
                     datasets: [
                         {
-                            data: data,
+                            data: timelineArray,
                             borderColor: '#9795f0',
                             fill: false,
                         },

@@ -149,7 +149,7 @@ export default {
             if (typeof value !== 'number') {
                 return value;
             }
-            var formatter = new Intl.NumberFormat('en-US', {
+            const formatter = new Intl.NumberFormat('en-US', {
                 style: 'currency',
                 currency: 'USD',
                 minimumFractionDigits: 0,
@@ -204,7 +204,7 @@ export default {
 }
 
 .coin-list-container::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
 
 .coin-list-container::-webkit-scrollbar-thumb {
