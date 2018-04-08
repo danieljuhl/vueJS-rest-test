@@ -55,7 +55,9 @@
                 </div>
             </div>
             <div class="column is-two-thirds">
-                <router-view :key="$route.name + ($route.params.id || '')"/>
+                <transition name="fade">
+                    <router-view :key="$route.name + ($route.params.id || '')"/>
+                </transition>
             </div>
         </div>
     </div>
@@ -216,5 +218,18 @@ export default {
 .coin-list-container::-webkit-scrollbar-thumb {
     background-color: #9795f0;
     outline: 1px solid slategrey;
+}
+
+.fade-enter-active {
+    transition: all 0.5s;
+}
+.fade-enter {
+    opacity: 0;
+    transform: translateX(-50px);
+}
+
+.fade-leave {
+    opacity: 0;
+    transform: translateX(-50px);
 }
 </style>
