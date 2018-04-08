@@ -63,6 +63,7 @@
 </template>
 
 <script>
+import 'promise-polyfill/src/polyfill';
 import 'whatwg-fetch';
 
 import Single from '../components/Single.vue';
