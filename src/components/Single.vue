@@ -10,7 +10,7 @@
             <strong>Price:</strong> {{coin.price | toCurrency}}
           </p>
           <p class="subtitle">
-            <strong>Supply:</strong> {{coin.supply | toCurrency}}
+            <strong>Supply:</strong> {{coin.supply}}
           </p>
           <p class="subtitle">
             <strong>Market Cap:</strong> {{coin.market_cap | toCurrency}}
